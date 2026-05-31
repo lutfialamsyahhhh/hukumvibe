@@ -16,16 +16,16 @@ HukumVibe adalah platform SaaS berbasis Next.js yang dirancang khusus untuk anal
 
 ## 🛠️ Tech Stack
 
-| Kategori | Teknologi |
-|----------|-----------|
-| **Frontend Framework** | Next.js 14 (App Router) |
-| **Language** | TypeScript |
-| **Styling** | Tailwind CSS + Framer Motion |
-| **UI Components** | Shadcn-style primitives + Lucide Icons |
-| **AI Integration** | Google Generative AI (Gemini) |
-| **PDF Processing** | pdf-parse + PDF.js |
-| **Validation** | Zod |
-| **Database** | Supabase (optional) |
+| Kategori               | Teknologi                              |
+| ---------------------- | -------------------------------------- |
+| **Frontend Framework** | Next.js 14 (App Router)                |
+| **Language**           | TypeScript                             |
+| **Styling**            | Tailwind CSS + Framer Motion           |
+| **UI Components**      | Shadcn-style primitives + Lucide Icons |
+| **AI Integration**     | Google Generative AI (Gemini)          |
+| **PDF Processing**     | pdf-parse + PDF.js                     |
+| **Validation**         | Zod                                    |
+| **Database**           | Supabase (optional)                    |
 
 ## 📦 Prerequisites
 
@@ -84,23 +84,26 @@ Container production mendengarkan di port `8080` dan siap dideploy ke Google Clo
 
 ## 📍 Routes & Pages
 
-| Route | Deskripsi |
-|-------|-----------|
-| `/` | Landing page - pengenalan aplikasi |
-| `/dashboard` | Workspace upload dan riwayat dokumen |
+| Route           | Deskripsi                              |
+| --------------- | -------------------------------------- |
+| `/`             | Landing page - pengenalan aplikasi     |
+| `/dashboard`    | Workspace upload dan riwayat dokumen   |
 | `/analyze/[id]` | Split-screen: PDF viewer & AI insights |
-| `/library` | Koleksi analisis dari session browser |
-| `/cara-kerja` | Panduan cara kerja aplikasi |
+| `/library`      | Koleksi analisis dari session browser  |
+| `/cara-kerja`   | Panduan cara kerja aplikasi            |
 
 ## 🔌 API Endpoints
 
 ### POST `/api/analyze`
+
 Analisis dokumen kontrak kerja dari PDF upload.
 
 **Request:**
+
 - Form data dengan file PDF
 
 **Response:**
+
 ```json
 {
   "id": "uuid",
@@ -112,9 +115,11 @@ Analisis dokumen kontrak kerja dari PDF upload.
 ```
 
 ### POST `/api/chat`
+
 Streaming respons chat follow-up dalam bahasa Indonesia.
 
 **Request:**
+
 ```json
 {
   "message": "Pertanyaan tentang kontrak",
@@ -161,11 +166,13 @@ npm run typecheck    # Type checking dengan TypeScript
 ## 🔐 Security & Storage
 
 Fitur storage saat ini:
+
 - **Session Storage**: Full analyses dalam `sessionStorage` (browser session)
 - **Local Storage**: History cards dalam `localStorage` (persistent)
 
 **Untuk Production Multi-User:**
 Ganti `src/lib/documents/storage.ts` dengan:
+
 - Database-backed document service
 - Signed object storage untuk PDF files
 - Proper authentication & authorization
@@ -180,14 +187,6 @@ Kontribusi sangat diterima! Berikut cara berkontribusi:
 4. **Push** ke branch (`git push origin feature/AmazingFeature`)
 5. **Buka Pull Request**
 
-## 📝 License
-
-Project ini dilisensikan di bawah MIT License. Lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
-
 ## 👨‍💼 Author
 
 Dibuat dengan ❤️ untuk membantu profesional hukum Indonesia menganalisis kontrak kerja dengan lebih efisien.
-
-## 📞 Support
-
-Untuk pertanyaan atau laporan bug, silakan buat [GitHub Issue](https://github.com/yourusername/hukumvibe/issues).
