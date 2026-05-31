@@ -1,0 +1,634 @@
+/* =====================================================================
+   HukumVibe — Global Visual Foundation
+   Premium Enterprise AI SaaS · Dark Mode · Zinc Design System
+   Inspired by: Apple · Linear · Vercel · Stripe · Arc Browser
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────
+   DESIGN TOKENS — CSS Custom Properties
+   All color, radius, and shadow values live here.
+   ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ── Surfaces ── */
+  --background:     9 9% 4%;     /* zinc-950 */
+  --surface:        9 9% 7%;     /* zinc-900 */
+  --surface-raised: 9 9% 12%;    /* zinc-800 ~70% */
+
+  /* ── Borders ── */
+  --border:         9 9% 15%;    /* zinc-800 */
+  --border-subtle:  9 9% 20%;    /* zinc-700/50 */
+
+  /* ── Text ── */
+  --foreground:     0 0% 100%;   /* white */
+  --foreground-secondary: 9 6% 64%;   /* zinc-400 */
+  --foreground-muted:     9 6% 51%;   /* zinc-500 */
+
+  /* ── Shadcn aliases (card, input, ring, primary, etc.) ── */
+  --card:                var(--surface);
+  --card-foreground:     var(--foreground);
+  --primary:             217 91% 60%;   /* blue-500 */
+  --primary-foreground:  0 0% 100%;
+  --secondary:           var(--surface-raised);
+  --secondary-foreground: var(--foreground-secondary);
+  --muted:               var(--surface-raised);
+  --muted-foreground:    var(--foreground-muted);
+  --accent:              217 91% 60%;   /* blue-500 */
+  --accent-foreground:   0 0% 100%;
+  --destructive:         347 77% 60%;  /* rose-500 */
+  --destructive-foreground: 0 0% 100%;
+  --success:             160 84% 39%;  /* emerald-500 */
+  --warning:             38 92% 50%;   /* amber-500 */
+  --input:               var(--border);
+  --ring:                217 91% 60%;
+
+  /* ── Radius ── */
+  --radius:         0.75rem;
+  --radius-sm:      0.5rem;
+  --radius-lg:      1rem;
+  --radius-xl:      1.25rem;
+  --radius-2xl:     1.5rem;
+  --radius-full:    9999px;
+
+  /* ── Shadows — soft, layered, no neon ── */
+  --shadow-xs:      0 1px 2px rgba(0, 0, 0, 0.40);
+  --shadow-sm:      0 2px 6px rgba(0, 0, 0, 0.45);
+  --shadow-md:      0 4px 16px rgba(0, 0, 0, 0.50);
+  --shadow-lg:      0 8px 32px rgba(0, 0, 0, 0.55);
+  --shadow-xl:      0 16px 56px rgba(0, 0, 0, 0.60);
+  --shadow-2xl:     0 24px 80px rgba(0, 0, 0, 0.65);
+  --shadow-card:    0 1px 3px rgba(0, 0, 0, 0.40), 0 4px 12px rgba(0, 0, 0, 0.30);
+  --shadow-elevated: 0 2px 8px rgba(0, 0, 0, 0.50), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-workspace: 0 20px 70px rgba(0, 0, 0, 0.50);
+
+  /* ── Motion ── */
+  --duration-fast:  150ms;
+  --duration-base:  250ms;
+  --duration-slow:  400ms;
+  --duration-cinematic: 600ms;
+  --ease-smooth:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:       cubic-bezier(0, 0, 0.2, 1);
+  --ease-in:        cubic-bezier(0.4, 0, 1, 1);
+  /* No spring — enterprise motion is never bouncy */
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --ease-standard:   cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   BASE RESET & GLOBAL DEFAULTS
+   ───────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  @apply border-border;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Prevent layout shift on scrollbar appear/disappear */
+  scrollbar-gutter: stable;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+  font-size: 1rem;         /* 16px base */
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'rlig' 1, 'calt' 1, 'kern' 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   TYPOGRAPHY HIERARCHY
+   Tight tracking for headlines · Comfortable body · Clear hierarchy
+   ───────────────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: hsl(var(--foreground));
+}
+
+/* Hero — landing page statement */
+.text-hero {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+/* Display — section openers */
+.text-display {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+/* Heading */
+.text-heading {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+/* Subheading */
+.text-subheading {
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+/* Body — main prose */
+.text-body {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.006em;
+  color: hsl(var(--foreground-secondary));
+}
+
+/* Small */
+.text-small {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: hsl(var(--foreground-muted));
+}
+
+/* Caption */
+.text-caption {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: hsl(var(--foreground-muted));
+}
+
+/* Label — UI element labels */
+.text-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground-muted));
+}
+
+/* Mono — code, IDs, technical strings */
+.text-mono {
+  font-family: 'Geist Mono', 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.875rem;
+  font-feature-settings: 'liga' 0;
+  letter-spacing: 0;
+}
+
+/* Prose width — optimal reading line length */
+.prose-width {
+  max-width: 65ch;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   LAYOUT FOUNDATIONS
+   ───────────────────────────────────────────────────────────────────── */
+
+/* Enterprise container */
+.container-enterprise {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-enterprise {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-enterprise {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Vertical section rhythm */
+.section-spacing {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   SURFACE & CARD COMPONENTS
+   ───────────────────────────────────────────────────────────────────── */
+
+/* Base surface — zinc-900 */
+.surface {
+  background-color: hsl(var(--surface));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-lg);
+}
+
+/* Elevated surface — zinc-800/70 */
+.surface-raised {
+  background-color: hsl(var(--surface-raised));
+  border: 1px solid hsl(var(--border-subtle));
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* Glass surface — subtle frosted look without overuse */
+.surface-glass {
+  background-color: hsl(var(--surface) / 0.85);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-lg);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   FOCUS & ACCESSIBILITY
+   ───────────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   CUSTOM SCROLLBAR — subtle, zinc-toned
+   ───────────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border-subtle));
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground-muted));
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border-subtle)) transparent;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   SELECTION COLOR
+   ───────────────────────────────────────────────────────────────────── */
+::selection {
+  background-color: hsl(217 91% 60% / 0.25);
+  color: hsl(0 0% 100%);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   ANIMATION UTILITIES
+   Calm, cinematic, purposeful motion. No bounce or flash.
+   ───────────────────────────────────────────────────────────────────── */
+
+/* ── Keyframes ── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blur-in {
+  from { opacity: 0; filter: blur(6px); transform: translateY(10px); }
+  to   { opacity: 1; filter: blur(0px); transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* Gentle breathing — for ambient indicator dots */
+@keyframes breathe {
+  0%, 100% { transform: scale(1);    opacity: 0.9; }
+  50%       { transform: scale(1.15); opacity: 0.6; }
+}
+
+/* Sweep — for loading bars and skeleton lines */
+@keyframes sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* ── Utility Classes ── */
+.animate-fade-in {
+  animation: fade-in var(--duration-base) var(--ease-out) both;
+}
+
+.animate-fade-up {
+  animation: fade-up var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-fade-down {
+  animation: fade-down var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-blur-in {
+  animation: blur-in var(--duration-cinematic) var(--ease-out) both;
+}
+
+.animate-scale-in {
+  animation: scale-in var(--duration-base) var(--ease-out) both;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2.4s var(--ease-smooth) infinite;
+}
+
+.animate-breathe {
+  animation: breathe 2.4s var(--ease-smooth) infinite;
+}
+
+/* ── Stagger delay utilities ── */
+.stagger-1 { animation-delay: 50ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 150ms; }
+.stagger-4 { animation-delay: 200ms; }
+.stagger-5 { animation-delay: 250ms; }
+.stagger-6 { animation-delay: 300ms; }
+
+/* ── Transition presets ── */
+.transition-smooth {
+  transition: all var(--duration-base) var(--ease-smooth);
+}
+
+.transition-colors-smooth {
+  transition: color var(--duration-base) var(--ease-smooth),
+              background-color var(--duration-base) var(--ease-smooth),
+              border-color var(--duration-base) var(--ease-smooth),
+              opacity var(--duration-base) var(--ease-smooth);
+}
+
+.transition-transform-smooth {
+  transition: transform var(--duration-base) var(--ease-smooth);
+}
+
+/* ── Hover lift — subtle y-axis motion ── */
+.hover-lift {
+  will-change: transform;
+  transition: transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
+}
+.hover-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-elevated);
+}
+.hover-lift:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Hover dim — slight opacity fade for secondary actions ── */
+.hover-dim {
+  transition: opacity var(--duration-fast) var(--ease-smooth);
+}
+.hover-dim:hover { opacity: 0.75; }
+
+/* ── Smooth interaction — base for all interactive elements ── */
+.smooth-interaction {
+  transition:
+    color var(--duration-fast) var(--ease-smooth),
+    background-color var(--duration-fast) var(--ease-smooth),
+    border-color var(--duration-fast) var(--ease-smooth),
+    box-shadow var(--duration-base) var(--ease-smooth),
+    opacity var(--duration-fast) var(--ease-smooth);
+}
+
+/* ── Focus ring — crisp, accessible ── */
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.focus-ring:focus-visible {
+  outline-color: hsl(var(--ring));
+}
+
+/* ── Shimmer skeleton ── */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  background: hsl(var(--surface));
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(var(--surface-raised)) 50%,
+    transparent 100%
+  );
+  animation: sweep 1.6s var(--ease-smooth) infinite;
+  will-change: transform;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   SPECIALIZED UTILITIES
+   ───────────────────────────────────────────────────────────────────── */
+
+/* Text balance for headlines */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Gradient text — blue accent */
+.text-gradient-blue {
+  background: linear-gradient(135deg, hsl(217 91% 70%), hsl(217 91% 60%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: hsl(var(--border));
+}
+
+/* Dot separator */
+.dot-separator::before {
+  content: '\00B7';
+  margin: 0 0.5em;
+  color: hsl(var(--foreground-muted));
+}
+
+/* Safe-area insets — for notched devices (iPhone Dynamic Island, home bar) */
+.safe-area-inset-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-area-inset-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Minimum touch target — iOS HIG: 44×44px */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   PDF VIEWER UTILITIES — preserved from original
+   ───────────────────────────────────────────────────────────────────── */
+.pdf-highlight {
+  background: hsl(217 91% 60% / 0.2);
+  color: hsl(217 91% 80%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  border-radius: 3px;
+  padding: 1px 3px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   COMPONENT LAYER — reusable class-based patterns
+   ───────────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────
+   REDUCED MOTION — respect user preferences
+   Never remove motion entirely; just slow it down / simplify.
+   ───────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep pulse alive but much slower */
+  .animate-pulse-subtle,
+  .animate-breathe {
+    animation-duration: 6s !important;
+  }
+}
+
+@layer components {
+  /* Subtle divider between sections */
+  .section-divider {
+    @apply border-t border-zinc-800;
+  }
+
+  /* Status badge base */
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5
+           text-xs font-medium;
+  }
+
+  .badge-blue {
+    @apply badge bg-blue-500/10 text-blue-400 border border-blue-500/20;
+  }
+
+  .badge-emerald {
+    @apply badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20;
+  }
+
+  .badge-rose {
+    @apply badge bg-rose-500/10 text-rose-400 border border-rose-500/20;
+  }
+
+  .badge-amber {
+    @apply badge bg-amber-500/10 text-amber-400 border border-amber-500/20;
+  }
+
+  /* Consistent card padding */
+  .card-padding {
+    @apply p-6 md:p-8;
+  }
+
+  /* Full-bleed section background */
+  .bg-surface {
+    @apply bg-zinc-900;
+  }
+
+  .bg-surface-raised {
+    @apply bg-zinc-800/70;
+  }
+}

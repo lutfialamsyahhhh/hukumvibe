@@ -1,0 +1,14 @@
+services:
+  hukumvibe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:8080"
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3-pro}
+      ALLOW_DEMO_ANALYSIS: ${ALLOW_DEMO_ANALYSIS:-false}
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
